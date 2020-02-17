@@ -52,9 +52,9 @@ def disconnect(sid):
 	sio.emit('new_disconnection', {'userid': sid})
 
 @sio.event
-def step(userid, to):
-	print('step: {} to the {}'.format(userid, to))
-	sio.emit('step', {'userid': userid, 'to': to})
+def step(userid, xy):
+	print('step: {} to the {}'.format(userid, xy))
+	sio.emit('step', {'userid': userid, 'xy': xy})
 
 if __name__ == "__main__":
 	app.run(host='0.0.0.0', port=5000, debug=True, threaded=True)

@@ -35,45 +35,38 @@
 
 
 	socket.on('step', function(msg){
-		console.log('step', msg);
-		console.log($('div[data-userid="' + msg['userid'] + '"]').position());
-		switch(msg['to']['to']) {
-			case 'left':
-				$('div[data-userid="' + msg['userid'] + '"]').animate({ "left": "-="+step+"px" }, delay );
-			break;
-			case 'up':
-				$('div[data-userid="' + msg['userid'] + '"]').animate({ "top": "-="+step+"px" }, delay );
-			break
-			case 'right':
-				$('div[data-userid="' + msg['userid'] + '"]').animate({ "right": "-="+step+"px" }, delay );
-			break
-			case 'down':
-				$('div[data-userid="' + msg['userid'] + '"]').animate({ "top": "+="+step+"px" }, delay );
-			break
+		console.log(msg);
+		if (msg['userid'] != socket.id) {
+			$('div[data-userid="' + msg['userid'] + '"]').css({'left': msg['xy']['xy'].left, 'top': msg['xy']['xy'].top});
 		}
 	});
 	
 
 	$(document).keydown(function(e) {
+		var me = $('div[data-userid="' + socket.id + '"]');
 	    switch(e.which) {
 	        case 37: // left
 	        console.log('left');
-	        socket.emit('step', {'userid': socket.id, 'to': 'left'})
+	        me.css('left', me.position().left - 15);
+	        socket.emit('step', {'userid': socket.id, 'xy': me.position()});
 	        break;
 
 	        case 38: // up
 	        console.log('up');
-	        socket.emit('step', {'userid': socket.id, 'to': 'up'})
+	        me.css('top', me.position().top - 15);
+	        socket.emit('step', {'userid': socket.id, 'xy': me.position()});
 	        break;
 
 	        case 39: // right
 	        console.log('right');
-	        socket.emit('step', {'userid': socket.id, 'to': 'right'})
+	        me.css('left', me.position().left + 15);
+	        socket.emit('step', {'userid': socket.id, 'xy': me.position()});
 	        break;
 
 	        case 40: // down
 	        console.log('down');
-	        socket.emit('step', {'userid': socket.id, 'to': 'down'})
+	        me.css('top', me.position().top + 15);
+	        socket.emit('step', {'userid': socket.id, 'xy': me.position()});
 	        break;
 
 	        default: return; // exit this handler for other keys
