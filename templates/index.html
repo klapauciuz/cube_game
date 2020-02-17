@@ -1,0 +1,86 @@
+<!-- http://ramp2bombkadwvgz.onion/viewtopic.php?id=4113 -->
+{% extends "base.html" %}
+{% block content %}
+<div class='box'>
+  
+  <!-- <button action='' class='step'>step</button> -->
+</div> 
+<script type="text/javascript">
+	// config
+	step = '30';
+	delay = 50;
+
+
+
+	// console.log({{users|safe}});
+	$.map({{users|safe}}, function( n ) {
+	  console.log(n);
+	  $('.box').append('<div class="square" data-userid="' + n + '"><div class="black"></div>' + n + '</div>');
+	});
+
+
+	var socket = io('http://at-no.ru:5000/');
+	socket.on('new_connection', function(msg){
+		console.log('new user!', msg);
+		$('.box').append('<div class="square" data-userid="' + msg['userid'] + '"><div class="black"></div>' + msg['userid'] + '</div>');
+		
+		console.log('iam is', socket.id);
+		$('div[data-userid="' + socket.id + '"] .black').css('background-color', 'red');
+
+	});
+	socket.on('new_disconnection', function(msg){
+		console.log('bye bye user', msg);
+		$('div[data-userid="' + msg['userid'] + '"]').remove();
+	});
+
+
+	socket.on('step', function(msg){
+		console.log('step', msg);
+		console.log($('div[data-userid="' + msg['userid'] + '"]').position());
+		switch(msg['to']['to']) {
+			case 'left':
+				$('div[data-userid="' + msg['userid'] + '"]').animate({ "left": "-="+step+"px" }, delay );
+			break;
+			case 'up':
+				$('div[data-userid="' + msg['userid'] + '"]').animate({ "top": "-="+step+"px" }, delay );
+			break
+			case 'right':
+				$('div[data-userid="' + msg['userid'] + '"]').animate({ "right": "-="+step+"px" }, delay );
+			break
+			case 'down':
+				$('div[data-userid="' + msg['userid'] + '"]').animate({ "top": "+="+step+"px" }, delay );
+			break
+		}
+	});
+	
+
+	$(document).keydown(function(e) {
+	    switch(e.which) {
+	        case 37: // left
+	        console.log('left');
+	        socket.emit('step', {'userid': socket.id, 'to': 'left'})
+	        break;
+
+	        case 38: // up
+	        console.log('up');
+	        socket.emit('step', {'userid': socket.id, 'to': 'up'})
+	        break;
+
+	        case 39: // right
+	        console.log('right');
+	        socket.emit('step', {'userid': socket.id, 'to': 'right'})
+	        break;
+
+	        case 40: // down
+	        console.log('down');
+	        socket.emit('step', {'userid': socket.id, 'to': 'down'})
+	        break;
+
+	        default: return; // exit this handler for other keys
+	    }
+	    e.preventDefault(); // prevent the default action (scroll / move caret)
+	});
+
+
+</script>
+{% endblock %}

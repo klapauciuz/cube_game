@@ -1,0 +1,34 @@
+.square {
+	display: inline-block;
+	padding: 15px;
+	position: absolute;
+}
+
+.black {
+	background-color: black;
+	width: 25px;
+	height: 25px;
+	display: inline-block;
+	padding: 10px;
+	margin: 3px;
+}
+
+.box {
+	text-align: center;
+	font-size: 11px;
+	font-family: 'Calibri';
+	width: 100%;
+	height: 500px;
+}
+
+body {
+	font-family: 'Calibri';
+}
+
+.username {
+	width: 50px;
+}
+
+.userid {
+	float: right;
+}

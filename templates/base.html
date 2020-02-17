@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title></title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+{% block header %}
+<center>
+  <div id='Boojum'></div>
+  <h1>press <b>← ↑ → ↓</b> arrows to play</h1>
+  <h2>red square is you ¯\_(ツ)_/¯</h2>
+</center>
+<div id='menu'>
+</div>
+{% endblock header %}
+{% block content %}{% endblock  %}
+</body>
+</html>
