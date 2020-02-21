@@ -70,6 +70,7 @@
    		$div2 = $('#me');
 		if (is_colliding($div1, $div2)) {
 			console.log('eat!');
+			$div2.css({'width': '+=15px', 'height': '+=15px'});
 			$div1.hide();
 		}
 	});
