@@ -2,27 +2,27 @@
 {% extends "base.html" %}
 {% block content %}
 <div class='box'>
-  
   <!-- <button action='' class='step'>step</button> -->
 </div> 
 <script type="text/javascript">
 	// config
 	step = '30';
 	delay = 50;
-
+	// username = '<sup><input type="text" name="username" class="username"/></sup><br>'
+	username = '';
 
 
 	// console.log({{users|safe}});
 	$.map({{users|safe}}, function( n ) {
 	  console.log(n);
-	  $('.box').append('<div class="square" data-userid="' + n + '"><div class="black"></div>' + n + '</div>');
+	  $('.box').append('<div class="square" data-userid="' + n + '"><div class="black"></div><div class="userid">' + n + '</div>');
 	});
 
 
 	var socket = io('http://at-no.ru:5000/');
 	socket.on('new_connection', function(msg){
 		console.log('new user!', msg);
-		$('.box').append('<div class="square" data-userid="' + msg['userid'] + '"><div class="black"></div>' + msg['userid'] + '</div>');
+		$('.box').append('<div class="square" data-userid="' + msg['userid'] + '"><div class="black"></div>' + username + '<div class="userid">' + msg['userid'] + '</div>');
 		
 		console.log('iam is', socket.id);
 		$('div[data-userid="' + socket.id + '"] .black').css('background-color', 'red');
