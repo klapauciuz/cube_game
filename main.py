@@ -27,6 +27,8 @@ ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'])
 
 users = []
 
+bacteria_mode = True
+
 # @app.before_request
 # def before_request():
 # 	g.user = None
