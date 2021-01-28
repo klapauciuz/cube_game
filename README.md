@@ -1,2 +1,2 @@
-# verystrangegame
+# cube game
 you're just a cube...
